@@ -12,6 +12,7 @@ async function loadSettings() {
 
   document.getElementById('workInterval').value = settings.workIntervalMinutes;
   document.getElementById('breakDuration').value = settings.breakDurationMinutes;
+  document.getElementById('instantSkip').checked = settings.instantSkip ?? false;
 
   const orderRadios = document.querySelectorAll('input[name="photoOrder"]');
   orderRadios.forEach((radio) => {
@@ -56,12 +57,13 @@ async function handleSave() {
   const workInterval = parseInt(document.getElementById('workInterval').value, 10);
   const breakDuration = parseInt(document.getElementById('breakDuration').value, 10);
   const selectedOrder = document.querySelector('input[name="photoOrder"]:checked')?.value || 'random';
+  const instantSkip = document.getElementById('instantSkip').checked;
 
   if (!Number.isInteger(workInterval) || workInterval < 1) return;
   if (!Number.isInteger(breakDuration) || breakDuration < 1) return;
 
   await Promise.all([
-    saveSettings({ workIntervalMinutes: workInterval, breakDurationMinutes: breakDuration }),
+    saveSettings({ workIntervalMinutes: workInterval, breakDurationMinutes: breakDuration, instantSkip }),
     setOrder(selectedOrder),
   ]);
 

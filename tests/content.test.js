@@ -48,6 +48,33 @@ describe('SKIP_UNLOCK_SECONDS', () => {
   });
 });
 
+describe('getSkipDelay', () => {
+  const { getSkipDelay } = require('../src/content.js');
+
+  beforeEach(() => {
+    chrome.storage.local.get.mockReset();
+  });
+
+  it('returns SKIP_UNLOCK_SECONDS when instantSkip is false', async () => {
+    chrome.storage.local.get.mockImplementation((keys, cb) =>
+      cb({ settings: { instantSkip: false } })
+    );
+    expect(await getSkipDelay()).toBe(SKIP_UNLOCK_SECONDS);
+  });
+
+  it('returns 0 when instantSkip is true', async () => {
+    chrome.storage.local.get.mockImplementation((keys, cb) =>
+      cb({ settings: { instantSkip: true } })
+    );
+    expect(await getSkipDelay()).toBe(0);
+  });
+
+  it('defaults to SKIP_UNLOCK_SECONDS when setting is absent', async () => {
+    chrome.storage.local.get.mockImplementation((keys, cb) => cb({}));
+    expect(await getSkipDelay()).toBe(SKIP_UNLOCK_SECONDS);
+  });
+});
+
 describe('overlay DOM behaviour', () => {
   beforeEach(() => {
     document.body.innerHTML = '';

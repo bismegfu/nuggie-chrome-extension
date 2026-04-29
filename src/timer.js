@@ -8,6 +8,7 @@ const DEFAULT_SETTINGS = {
   workIntervalMinutes: 60,
   breakDurationMinutes: 1,
   photoOrder: 'random',
+  instantSkip: false,
 };
 
 function getStorage(keys) {

@@ -40,6 +40,17 @@ describe('getSettings', () => {
     expect(settings.workIntervalMinutes).toBe(30);
     expect(settings.breakDurationMinutes).toBe(DEFAULT_SETTINGS.breakDurationMinutes);
   });
+
+  it('defaults instantSkip to false', async () => {
+    const settings = await getSettings();
+    expect(settings.instantSkip).toBe(false);
+  });
+
+  it('persists instantSkip: true', async () => {
+    await saveSettings({ instantSkip: true });
+    const settings = await getSettings();
+    expect(settings.instantSkip).toBe(true);
+  });
 });
 
 describe('getTimerState', () => {

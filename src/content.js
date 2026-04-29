@@ -31,6 +31,15 @@ function getBreakDurationSeconds() {
   });
 }
 
+function getSkipDelay() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(['settings'], (result) => {
+      const settings = result.settings || {};
+      resolve(settings.instantSkip ? 0 : SKIP_UNLOCK_SECONDS);
+    });
+  });
+}
+
 function getPhotoUrl(photo) {
   if (!photo) return null;
   if (photo.dataUrl) return photo.dataUrl;
@@ -71,9 +80,13 @@ async function showOverlay(photo, remainingSeconds = null) {
   const timerEl = overlay.querySelector('#nuggie-timer');
   const skipBtn = overlay.querySelector('#nuggie-skip');
 
-  const skipTimeout = setTimeout(() => {
+  const skipDelay = await getSkipDelay();
+  if (skipDelay === 0) {
+    skipBtn.classList.add('nuggie-skip-ready');
+  }
+  const skipTimeout = skipDelay > 0 ? setTimeout(() => {
     if (skipBtn) skipBtn.classList.add('nuggie-skip-ready');
-  }, SKIP_UNLOCK_SECONDS * 1000);
+  }, skipDelay * 1000) : null;
 
   const countdownInterval = setInterval(() => {
     remaining -= 1;
@@ -134,5 +147,5 @@ function formatTime(seconds) {
 
 // Expose for testing
 if (typeof module !== 'undefined') {
-  module.exports = { formatTime, getPhotoUrl, SKIP_UNLOCK_SECONDS };
+  module.exports = { formatTime, getPhotoUrl, getSkipDelay, SKIP_UNLOCK_SECONDS };
 }
