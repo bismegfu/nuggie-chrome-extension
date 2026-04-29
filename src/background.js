@@ -115,6 +115,12 @@ async function sendOverlayTrigger(tabId, photo = null) {
 }
 
 async function handleBreakDismissed() {
+  // Notify all tabs showing the overlay to remove it
+  const dismissPromises = [...breakActiveTabIds].map((tabId) =>
+    chrome.tabs.sendMessage(tabId, { type: 'HIDE_OVERLAY' }).catch(() => {})
+  );
+  await Promise.all(dismissPromises);
+
   breakActiveTabIds.clear();
   breakPhoto = null;
   await resetTimer();
