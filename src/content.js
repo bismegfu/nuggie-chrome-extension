@@ -56,7 +56,7 @@ async function showOverlay(photo, remainingSeconds = null) {
     <div id="nuggie-message">
       <p>Time for a break!</p>
       <div id="nuggie-timer">${formatTime(breakDurationSeconds)}</div>
-      <button id="nuggie-skip">Skip</button>
+      <button id="nuggie-skip">Skip [ENTER]</button>
     </div>
   `;
   document.body.appendChild(overlay);
