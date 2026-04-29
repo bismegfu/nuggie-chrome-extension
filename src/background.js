@@ -66,21 +66,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 async function notifyActiveTab() {
   breakPhoto = await getNextPhoto(); // pick photo once for the whole break
 
-  // Prefer the active tab in the focused window
-  const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  if (activeTab && isInjectableTab(activeTab)) {
-    breakActiveTabIds.add(activeTab.id);
-    await sendOverlayTrigger(activeTab.id, breakPhoto);
-    return;
-  }
+  // Send overlay to the active tab in every open window simultaneously
+  const allActiveTabs = await chrome.tabs.query({ active: true });
+  const injectableTabs = allActiveTabs.filter(isInjectableTab);
 
-  // Fallback: find the most recently active injectable tab across all windows
-  const allTabs = await chrome.tabs.query({ active: true });
-  const injectableTab = allTabs.find(isInjectableTab);
-  if (injectableTab) {
-    breakActiveTabIds.add(injectableTab.id);
-    await sendOverlayTrigger(injectableTab.id, breakPhoto);
-  }
+  await Promise.all(injectableTabs.map(async (tab) => {
+    breakActiveTabIds.add(tab.id);
+    await sendOverlayTrigger(tab.id, breakPhoto);
+  }));
 }
 
 function isInjectableTab(tab) {
