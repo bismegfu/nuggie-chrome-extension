@@ -53,6 +53,14 @@ async function renderPhotoGrid() {
   });
 }
 
+function debounce(fn, ms) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), ms);
+  };
+}
+
 async function handleSave() {
   const workInterval = parseInt(document.getElementById('workInterval').value, 10);
   const breakDuration = parseInt(document.getElementById('breakDuration').value, 10);
@@ -95,7 +103,15 @@ async function handlePhotoUpload(event) {
 document.addEventListener('DOMContentLoaded', async () => {
   await Promise.all([loadSettings(), renderPhotoGrid()]);
 
-  document.getElementById('saveBtn').addEventListener('click', handleSave);
+  const debouncedSave = debounce(handleSave, 400);
+
+  document.getElementById('workInterval').addEventListener('input', debouncedSave);
+  document.getElementById('breakDuration').addEventListener('input', debouncedSave);
+  document.getElementById('instantSkip').addEventListener('change', handleSave);
+  document.querySelectorAll('input[name="photoOrder"]').forEach((radio) => {
+    radio.addEventListener('change', handleSave);
+  });
+
   document.getElementById('photoUpload').addEventListener('change', handlePhotoUpload);
 });
 

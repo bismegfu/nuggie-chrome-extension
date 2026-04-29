@@ -20,10 +20,10 @@ beforeEach(() => {
   document.body.innerHTML = `
     <input id="workInterval" type="number" value="60" />
     <input id="breakDuration" type="number" value="1" />
+    <input id="instantSkip" type="checkbox" />
     <input type="radio" name="photoOrder" value="random" checked />
     <input type="radio" name="photoOrder" value="sequential" />
     <div id="photoGrid"></div>
-    <button id="saveBtn"></button>
     <span id="saveStatus"></span>
   `;
 });
