@@ -1,0 +1,94 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 200px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #fdf6f0;
+  color: #3d2c2c;
+}
+
+.popup {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #c0614a;
+}
+
+.paw {
+  font-size: 18px;
+}
+
+.status {
+  text-align: center;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #9e7c70;
+  margin-bottom: 4px;
+}
+
+.countdown {
+  font-size: 28px;
+  font-weight: 700;
+  color: #c0614a;
+  letter-spacing: 1px;
+}
+
+.break-active {
+  text-align: center;
+  width: 100%;
+  background: #fff5f2;
+  border: 2px solid #f0d8cf;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.break-icon {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.break-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #c0614a;
+}
+
+.hidden {
+  display: none;
+}
+
+.settings-link {
+  font-size: 12px;
+  color: #9e7c70;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.settings-link:hover {
+  color: #c0614a;
+  text-decoration: underline;
+}

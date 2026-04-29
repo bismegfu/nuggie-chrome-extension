@@ -1,0 +1,128 @@
+#nuggie-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0, 0, 0, 0.75) !important;
+  z-index: 2147483647 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+.nuggie-cat {
+  position: fixed !important;
+  bottom: 0 !important;
+  max-height: 70vh !important;
+  width: auto !important;
+  cursor: pointer !important;
+  transition: none !important;
+}
+
+.nuggie-cat-right {
+  right: 0 !important;
+  transform: translateX(120vw); /* no !important — animation must be able to override this */
+}
+
+.nuggie-cat-left {
+  left: 0 !important;
+  transform: translateX(-120vw); /* no !important — animation must be able to override this */
+}
+
+.nuggie-cat img {
+  max-height: 70vh !important;
+  width: auto !important;
+  display: block !important;
+}
+
+.nuggie-walk-in-right {
+  animation: nuggie-walk-right 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+             nuggie-bob 0.4s ease-in-out 1.2s infinite !important;
+}
+
+.nuggie-walk-in-left {
+  animation: nuggie-walk-left 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+             nuggie-bob 0.4s ease-in-out 1.2s infinite !important;
+}
+
+.nuggie-scurry-right {
+  animation: nuggie-scurry-to-right 0.35s ease-in forwards;
+}
+
+.nuggie-scurry-left {
+  animation: nuggie-scurry-to-left 0.35s ease-in forwards;
+}
+
+@keyframes nuggie-walk-right {
+  from { transform: translateX(120vw); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes nuggie-walk-left {
+  from { transform: translateX(-120vw); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes nuggie-bob {
+  0%, 100% { margin-bottom: 0px; }
+  50%       { margin-bottom: 12px; }
+}
+
+@keyframes nuggie-scurry-to-right {
+  from { transform: translateX(0); }
+  to   { transform: translateX(120vw); }
+}
+
+@keyframes nuggie-scurry-to-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-120vw); }
+}
+
+#nuggie-message {
+  position: fixed !important;
+  top: 32px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  text-align: center !important;
+  color: #fff !important;
+  z-index: 2147483648 !important;
+}
+
+#nuggie-message p {
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  margin: 0 0 8px !important;
+  color: #fff !important;
+}
+
+#nuggie-timer {
+  font-size: 48px !important;
+  font-weight: 700 !important;
+  letter-spacing: 2px !important;
+  margin-bottom: 16px !important;
+  color: #fff !important;
+}
+
+#nuggie-skip {
+  background: transparent !important;
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  border-radius: 20px !important;
+  padding: 8px 24px !important;
+  font-size: 14px !important;
+  cursor: default !important;
+  pointer-events: none !important;
+  transition: all 0.3s !important;
+}
+
+#nuggie-skip.nuggie-skip-ready {
+  border-color: #fff !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+#nuggie-skip.nuggie-skip-ready:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.nuggie-cat-placeholder {
+  font-size: 120px !important;
+  line-height: 1 !important;
+}
