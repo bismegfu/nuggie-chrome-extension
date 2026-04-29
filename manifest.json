@@ -8,6 +8,7 @@
     "storage",
     "alarms",
     "tabs",
+    "windows",
     "scripting"
   ],
   "host_permissions": [

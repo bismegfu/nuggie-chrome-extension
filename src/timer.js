@@ -54,13 +54,13 @@ async function tickActiveSecond(delta = 1) {
     return { triggered: true, state: newState };
   }
 
-  const newState = { ...state, elapsedSeconds: newElapsed };
+  const newState = { ...state, elapsedSeconds: newElapsed, lastTickAt: Date.now() };
   await saveTimerState(newState);
   return { triggered: false, state: newState };
 }
 
 async function resetTimer() {
-  const newState = { elapsedSeconds: 0, isBreakActive: false };
+  const newState = { elapsedSeconds: 0, isBreakActive: false, startedAt: Date.now(), lastTickAt: null };
   await saveTimerState(newState);
   return newState;
 }
@@ -74,8 +74,12 @@ async function getRemainingBreakSeconds() {
 
 async function getRemainingSeconds() {
   const [state, settings] = await Promise.all([getTimerState(), getSettings()]);
+  if (state.isBreakActive) return 0;
   const thresholdSeconds = settings.workIntervalMinutes * 60;
-  return Math.max(0, thresholdSeconds - state.elapsedSeconds);
+  // Interpolate real-time seconds since the last tick (or since start if no tick yet)
+  const anchor = state.lastTickAt ?? state.startedAt ?? null;
+  const secondsSinceAnchor = anchor ? Math.floor((Date.now() - anchor) / 1000) : 0;
+  return Math.max(0, thresholdSeconds - state.elapsedSeconds - secondsSinceAnchor);
 }
 
 export {
