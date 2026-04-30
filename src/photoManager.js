@@ -2,7 +2,7 @@ const STORAGE_KEY = 'catPhotos';
 const INDEX_KEY = 'photoIndex';
 const ORDER_KEY = 'photoOrder';
 const DEFAULTS_VERSION_KEY = 'defaultPhotosVersion';
-const DEFAULTS_VERSION = 2; // bump when DEFAULT_PHOTO_PATHS changes
+const DEFAULTS_VERSION = 3; // bump when DEFAULT_PHOTO_PATHS changes
 
 const DEFAULT_PHOTO_PATHS = [
   'assets/IMG_6976.PNG',
@@ -12,6 +12,11 @@ const DEFAULT_PHOTO_PATHS = [
   'assets/IMG_6980.PNG',
   'assets/IMG_6981.PNG',
   'assets/IMG_6982.PNG',
+  'assets/IMG_6988.PNG',
+  'assets/IMG_6989.PNG',
+  'assets/IMG_6990.PNG',
+  'assets/IMG_6991.PNG',
+  'assets/IMG_6992.PNG',
 ];
 
 function getStorage(keys) {
