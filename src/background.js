@@ -1,4 +1,4 @@
-import { tickActiveSecond, resetTimer, getTimerState, getRemainingBreakSeconds } from './timer.js';
+import { tickActiveSecond, resetTimer, getTimerState, getRemainingBreakSeconds, forceBreak } from './timer.js';
 import { getNextPhoto, initDefaultPhotos } from './photoManager.js';
 
 const TICK_ALARM = 'nuggie_tick';
@@ -60,6 +60,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'GET_TIMER_STATE') {
     getTimerState().then((state) => sendResponse(state));
     return true; // async response
+  }
+  if (message.type === 'FORCE_BREAK') {
+    // Popup detected remaining <= 0 before the alarm fired — trigger immediately
+    forceBreak().then(async ({ triggered }) => {
+      if (triggered) await notifyActiveTab();
+    });
   }
 });
 

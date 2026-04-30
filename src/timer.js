@@ -83,6 +83,14 @@ async function getRemainingSeconds() {
   return Math.max(0, thresholdSeconds - state.elapsedSeconds - secondsSinceAnchor);
 }
 
+async function forceBreak() {
+  const state = await getTimerState();
+  if (state.isBreakActive) return { triggered: false };
+  const newState = { elapsedSeconds: 0, isBreakActive: true, breakStartedAt: Date.now() };
+  await saveTimerState(newState);
+  return { triggered: true };
+}
+
 export {
   getSettings,
   saveSettings,
@@ -92,5 +100,6 @@ export {
   resetTimer,
   getRemainingSeconds,
   getRemainingBreakSeconds,
+  forceBreak,
   DEFAULT_SETTINGS,
 };

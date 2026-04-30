@@ -26,6 +26,12 @@ async function render() {
     countdownEl.textContent = formatCountdown(remaining);
     statusEl.classList.remove('hidden');
     breakActiveEl.classList.add('hidden');
+
+    // Alarm can fire late — if the popup sees 0s before the background triggers,
+    // nudge it to fire immediately.
+    if (remaining <= 0) {
+      chrome.runtime.sendMessage({ type: 'FORCE_BREAK' });
+    }
   }
 }
 
